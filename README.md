@@ -8,13 +8,13 @@ Three stations are retuned via surgical XML patches:
 
 | Station | mid | `energyUsePerSec` | Energy Cell consumption |
 |---|---|---|---|
-| Logistic Bot Station | 2881 | 5 → **8** | 1 every 12s → **0** |
-| Salvage Bot Station | 2893 | 5 → **8** | 1 every 6s → **0** |
-| Combat Bot Station | 4527 | 5 → **8** | 1 every 6s → **0** |
+| Logistic Bot Station | 2881 | 5 → **8** | 1 every 12s → **1 every 9999s** |
+| Salvage Bot Station | 2893 | 5 → **8** | 1 every 6s → **1 every 9999s** |
+| Combat Bot Station | 4527 | 5 → **8** | 1 every 6s → **1 every 9999s** |
 
-In exchange for a slightly heavier continuous draw on the power grid, your bots no longer need a steady supply of Energy Cells (element 1926). Keep generators and batteries healthy and your fleet stays charged forever.
+The dock keeps a one-cell-in-storage requirement to bootstrap the charge cycle, but in practice one cell lasts roughly 2.8 hours of game time — effectively unlimited. Pair the bump in grid draw with bigger generators or extra batteries.
 
-> The mod keeps the `<oneChargeNeeds>` block in place and sets `howMuch="0"` rather than removing the block. Removing it entirely stops the dock from charging bots at all — the Java tick requires the needs list to exist.
+> ⚠ Why not just set consumption to zero? The game's `RoboDock` Java logic scales the per-tick charge applied to the bot *from* the amount consumed (`convertResToCharge`). Setting `howMuch=0` or removing the `<oneChargeNeeds>` block stops the bot from charging at all. Bumping `consumeEvery` is the safe knob — the bot still charges normally, but cells are sipped at a rate you'll never notice.
 
 ## Requirements
 
@@ -58,8 +58,8 @@ Then:
 
 <Operation Class="AttributeSet">
     <xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
-    <attribute>howMuch</attribute>
-    <value>0</value>
+    <attribute>consumeEvery</attribute>
+    <value>9999</value>
 </Operation>
 ```
 
@@ -98,7 +98,7 @@ After applying the mod, open `<SpaceHaven>/mods/modloader/logs.txt`. You should 
       result:     OK
 ```
 
-Six `AttributeSet` operations total, all `result: OK`.
+Nine `AttributeSet` operations total (three per station — energy draw, howMuch, consumeEvery), all `result: OK`.
 
 ## License
 

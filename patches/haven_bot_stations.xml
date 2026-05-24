@@ -4,53 +4,64 @@
 	<!--
 		Drones Plus — Phase 1
 		Tune player bot stations (Logistic mid=2881, Salvage mid=2893, Combat mid=4527):
-		  - Set continuous electric draw (energyUsePerSec) to 8 (vanilla: 5).
-		  - Set Energy Cell consumption (howMuch) to 0 so stations no longer
-		    drain Energy Cells (element 1926) while still triggering the
-		    Java charging tick (the dock won't charge a bot if oneChargeNeeds
-		    is absent entirely).
+		  - Bump continuous grid draw (energyUsePerSec) to 8 (vanilla: 5).
+		  - Keep <oneChargeNeeds> with howMuch=1 (the charge math scales from
+		    the consumed amount; setting howMuch=0 zeroes the charge and bots
+		    stop recharging). Instead, push consumeEvery to 9999 — one Energy
+		    Cell consumed roughly every ~2.8 hours of game time. The dock still
+		    needs a single cell in storage to bootstrap the charge cycle, but
+		    in practice cells are never depleted.
 	-->
 
-	<!-- Logistic Bot Station: bump electric draw -->
+	<!-- Logistic Bot Station -->
 	<Operation Class="AttributeSet">
 		<xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock</xpath>
 		<attribute>energyUsePerSec</attribute>
 		<value>8</value>
 	</Operation>
-
-	<!-- Logistic Bot Station: zero out Energy Cell consumption -->
 	<Operation Class="AttributeSet">
 		<xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
 		<attribute>howMuch</attribute>
-		<value>0</value>
+		<value>1</value>
+	</Operation>
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
+		<attribute>consumeEvery</attribute>
+		<value>9999</value>
 	</Operation>
 
-	<!-- Salvage Bot Station: bump electric draw -->
+	<!-- Salvage Bot Station -->
 	<Operation Class="AttributeSet">
 		<xpath>/data/Element/me[@mid='2893']/data/l/element/features/roboDock</xpath>
 		<attribute>energyUsePerSec</attribute>
 		<value>8</value>
 	</Operation>
-
-	<!-- Salvage Bot Station: zero out Energy Cell consumption -->
 	<Operation Class="AttributeSet">
 		<xpath>/data/Element/me[@mid='2893']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
 		<attribute>howMuch</attribute>
-		<value>0</value>
+		<value>1</value>
+	</Operation>
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='2893']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
+		<attribute>consumeEvery</attribute>
+		<value>9999</value>
 	</Operation>
 
-	<!-- Combat Bot Station: bump electric draw -->
+	<!-- Combat Bot Station -->
 	<Operation Class="AttributeSet">
 		<xpath>/data/Element/me[@mid='4527']/data/l/element/features/roboDock</xpath>
 		<attribute>energyUsePerSec</attribute>
 		<value>8</value>
 	</Operation>
-
-	<!-- Combat Bot Station: zero out Energy Cell consumption -->
 	<Operation Class="AttributeSet">
 		<xpath>/data/Element/me[@mid='4527']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
 		<attribute>howMuch</attribute>
-		<value>0</value>
+		<value>1</value>
+	</Operation>
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='4527']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
+		<attribute>consumeEvery</attribute>
+		<value>9999</value>
 	</Operation>
 
 </Patch>
