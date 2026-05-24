@@ -5,7 +5,10 @@
 		Drones Plus — Phase 1
 		Tune player bot stations (Logistic mid=2881, Salvage mid=2893, Combat mid=4527):
 		  - Set continuous electric draw (energyUsePerSec) to 8 (vanilla: 5).
-		  - Remove <oneChargeNeeds> so stations no longer consume Energy Cells (element 1926).
+		  - Set Energy Cell consumption (howMuch) to 0 so stations no longer
+		    drain Energy Cells (element 1926) while still triggering the
+		    Java charging tick (the dock won't charge a bot if oneChargeNeeds
+		    is absent entirely).
 	-->
 
 	<!-- Logistic Bot Station: bump electric draw -->
@@ -15,9 +18,11 @@
 		<value>8</value>
 	</Operation>
 
-	<!-- Logistic Bot Station: drop battery consumption -->
-	<Operation Class="NodeRemove">
-		<xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds</xpath>
+	<!-- Logistic Bot Station: zero out Energy Cell consumption -->
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
+		<attribute>howMuch</attribute>
+		<value>0</value>
 	</Operation>
 
 	<!-- Salvage Bot Station: bump electric draw -->
@@ -27,9 +32,11 @@
 		<value>8</value>
 	</Operation>
 
-	<!-- Salvage Bot Station: drop battery consumption -->
-	<Operation Class="NodeRemove">
-		<xpath>/data/Element/me[@mid='2893']/data/l/element/features/roboDock/oneChargeNeeds</xpath>
+	<!-- Salvage Bot Station: zero out Energy Cell consumption -->
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='2893']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
+		<attribute>howMuch</attribute>
+		<value>0</value>
 	</Operation>
 
 	<!-- Combat Bot Station: bump electric draw -->
@@ -39,9 +46,11 @@
 		<value>8</value>
 	</Operation>
 
-	<!-- Combat Bot Station: drop battery consumption -->
-	<Operation Class="NodeRemove">
-		<xpath>/data/Element/me[@mid='4527']/data/l/element/features/roboDock/oneChargeNeeds</xpath>
+	<!-- Combat Bot Station: zero out Energy Cell consumption -->
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='4527']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
+		<attribute>howMuch</attribute>
+		<value>0</value>
 	</Operation>
 
 </Patch>
