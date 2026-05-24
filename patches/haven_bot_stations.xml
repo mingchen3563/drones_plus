@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Patch>
+
+	<!--
+		Drones Plus — Phase 1
+		Tune player bot stations (Logistic mid=2881, Salvage mid=2893, Combat mid=4527):
+		  - Set continuous electric draw (energyUsePerSec) to 8 (vanilla: 5).
+		  - Remove <oneChargeNeeds> so stations no longer consume Energy Cells (element 1926).
+	-->
+
+	<!-- Logistic Bot Station: bump electric draw -->
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock</xpath>
+		<attribute>energyUsePerSec</attribute>
+		<value>8</value>
+	</Operation>
+
+	<!-- Logistic Bot Station: drop battery consumption -->
+	<Operation Class="NodeRemove">
+		<xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds</xpath>
+	</Operation>
+
+	<!-- Salvage Bot Station: bump electric draw -->
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='2893']/data/l/element/features/roboDock</xpath>
+		<attribute>energyUsePerSec</attribute>
+		<value>8</value>
+	</Operation>
+
+	<!-- Salvage Bot Station: drop battery consumption -->
+	<Operation Class="NodeRemove">
+		<xpath>/data/Element/me[@mid='2893']/data/l/element/features/roboDock/oneChargeNeeds</xpath>
+	</Operation>
+
+	<!-- Combat Bot Station: bump electric draw -->
+	<Operation Class="AttributeSet">
+		<xpath>/data/Element/me[@mid='4527']/data/l/element/features/roboDock</xpath>
+		<attribute>energyUsePerSec</attribute>
+		<value>8</value>
+	</Operation>
+
+	<!-- Combat Bot Station: drop battery consumption -->
+	<Operation Class="NodeRemove">
+		<xpath>/data/Element/me[@mid='4527']/data/l/element/features/roboDock/oneChargeNeeds</xpath>
+	</Operation>
+
+</Patch>

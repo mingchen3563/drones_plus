@@ -1,0 +1,7 @@
+.claude/
+.vscode/
+.idea/
+*.bak
+*.swp
+.DS_Store
+Thumbs.db

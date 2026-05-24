@@ -1,0 +1,18 @@
+<mod>
+	<name>Drones Plus</name>
+	<description>
+		<![CDATA[Rebalances player bot stations to run on grid power instead of consumable Energy Cells.
+
+Phase 1 — Bot Station Tuning:
+- Logistic Bot Station, Salvage Bot Station, and Combat Bot Station no longer consume Energy Cells.
+- In exchange, their continuous electric draw is increased (5 → 8 power/sec).
+- Tradeoff: keep your generators/batteries on the grid healthy and your bots stay charged forever, no item shuffling.
+
+This is the first slice of a planned drones overhaul. Future phases will expand player-facing drone gameplay.]]>
+	</description>
+	<minimumLoaderVersion>0.12.1</minimumLoaderVersion>
+	<version>0.1.0</version>
+	<author>mingc</author>
+	<modid>7700001</modid>
+	<config></config>
+</mod>
