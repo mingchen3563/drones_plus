@@ -85,6 +85,15 @@ Phase 2 — Drone Expansion (planned)
 - [ ] Investigate exposing the hostile-faction drone bay (mid 3733/3734) to the player.
 - [ ] New drone variants (heavy sentry, repair drone).
 
+## Known gotchas
+
+**Existing stations on a save don't update when you install or remove the mod.** Space Haven snapshots each station's `roboDock` config onto the placed instance at build time — toggling the mod changes the XML template but won't retroactively re-read it into already-placed stations. After installing (or uninstalling) the mod:
+
+- **Dismantle and rebuild** each Logistic / Salvage / Combat Bot Station on existing saves to pick up the new values.
+- Newly-built stations on the same save will use the current template automatically.
+
+This is purely a save-state quirk, not a bug in the mod or the modloader.
+
 ## Verifying the patch landed
 
 After applying the mod, open `<SpaceHaven>/mods/modloader/logs.txt`. You should see:
