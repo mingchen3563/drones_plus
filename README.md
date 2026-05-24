@@ -8,13 +8,11 @@ Three stations are retuned via surgical XML patches:
 
 | Station | mid | `energyUsePerSec` | Energy Cell consumption |
 |---|---|---|---|
-| Logistic Bot Station | 2881 | 5 → **8** | 1 every 12s → **1 every 9999s** |
-| Salvage Bot Station | 2893 | 5 → **8** | 1 every 6s → **1 every 9999s** |
-| Combat Bot Station | 4527 | 5 → **8** | 1 every 6s → **1 every 9999s** |
+| Logistic Bot Station | 2881 | 5 → **8** | 1 every 12s → **removed** |
+| Salvage Bot Station | 2893 | 5 → **8** | 1 every 6s → **removed** |
+| Combat Bot Station | 4527 | 5 → **8** | 1 every 6s → **removed** |
 
-The dock keeps a one-cell-in-storage requirement to bootstrap the charge cycle, but in practice one cell lasts roughly 2.8 hours of game time — effectively unlimited. Pair the bump in grid draw with bigger generators or extra batteries.
-
-> ⚠ Why not just set consumption to zero? The game's `RoboDock` Java logic scales the per-tick charge applied to the bot *from* the amount consumed (`convertResToCharge`). Setting `howMuch=0` or removing the `<oneChargeNeeds>` block stops the bot from charging at all. Bumping `consumeEvery` is the safe knob — the bot still charges normally, but cells are sipped at a rate you'll never notice.
+In exchange for a slightly heavier continuous draw on the power grid, stations no longer consume Energy Cells (element 1926) and logistic bots stop hauling cells to them. Bots dock, charge from the grid, and go.
 
 ## Requirements
 
@@ -56,10 +54,8 @@ Then:
     <value>8</value>
 </Operation>
 
-<Operation Class="AttributeSet">
-    <xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds/l[@element='1926']</xpath>
-    <attribute>consumeEvery</attribute>
-    <value>9999</value>
+<Operation Class="NodeRemove">
+    <xpath>/data/Element/me[@mid='2881']/data/l/element/features/roboDock/oneChargeNeeds</xpath>
 </Operation>
 ```
 
@@ -107,7 +103,7 @@ After applying the mod, open `<SpaceHaven>/mods/modloader/logs.txt`. You should 
       result:     OK
 ```
 
-Nine `AttributeSet` operations total (three per station — energy draw, howMuch, consumeEvery), all `result: OK`.
+Six operations total — three `AttributeSet` for `energyUsePerSec`, three `NodeRemove` for `<oneChargeNeeds>`, all `result: OK`.
 
 ## License
 
